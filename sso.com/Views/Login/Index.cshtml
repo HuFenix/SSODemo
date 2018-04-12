@@ -1,0 +1,47 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>sso登录</title>
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        $(function () {
+           
+            $("#btnPost").click(function () {
+                $.ajax({
+                    type: "Post",
+                    dataType: "json",
+                    url: "/login/post",
+                    data: { "redirect_url": $("#redirect_url").val(), "name": $("#name").val(), "pwd": $("#pwd").val() },
+                    success: function (result) {
+                        if (result.ReturnCode == 1) {
+                            window.location.href = result.ReturnMsg;
+                        } else {
+                            alert(result.ReturnMsg);
+                        }
+                        
+                    }
+                });
+            })
+        })
+
+    </script>
+</head>
+<body>
+    <h3> sso登录中心 </h3>
+    <div>
+
+        @*<form method="post" action="/login/post">*@
+        <input type="hidden" name="redirect_url" id="redirect_url" value="@ViewBag.redirect_url" />
+        用户名：<input type="text" name="name" id="name" /><br />
+        密码： <input type="password" name="pwd" id="pwd" /><br />
+        <input type="submit" id="btnPost" value="登录" />
+        @*</form>*@
+    </div>
+</body>
+</html>
