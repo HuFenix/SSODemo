@@ -47,13 +47,13 @@ namespace sso.com.Controllers
                     Utils.CacheHelper.Insert(token, name, 1);
                     //生成token--应该以更复杂的形式生成
 
-                    //2写cookie
-                    HttpCookie cookie = new HttpCookie("currentUser");
-                    cookie.HttpOnly = true;
-                    cookie.Expires = DateTime.Now.AddYears(100);//永不过期
-                    cookie.Value = token;
-                    Response.Cookies.Add(cookie);
-                    ret.ReturnCode = "1"; ret.ReturnMsg = redirect_url;                   
+                    //2 将token返回到前端，写入cookie
+                    //HttpCookie cookie = new HttpCookie("currentUser");
+                    //cookie.HttpOnly = true;
+                    //cookie.Expires = DateTime.Now.AddYears(100);//永不过期
+                    //cookie.Value = token;
+                    //Response.Cookies.Add(cookie);
+                    ret.ReturnCode = "1"; ret.ReturnMsg = redirect_url+"?token="+token;                   
                 }
                 else
                 {

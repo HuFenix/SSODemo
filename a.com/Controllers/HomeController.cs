@@ -13,12 +13,13 @@ namespace a.com.Controllers
     public class HomeController : Controller
     {
         //需要登录的页面-TODO
-        public ActionResult Index()
+        public ActionResult Index(string token=null)
         {
             //A            
             var v = "";//页面返回状态
             var systemNo = "a";//系统识别代码
 
+            //创建和更新cookie      
             var requestCookies = Request.Cookies["currentUser"];
             HttpCookie cookie = new HttpCookie("currentUser");
             cookie.HttpOnly = true;
@@ -26,6 +27,10 @@ namespace a.com.Controllers
             if (requestCookies != null)
             {
                 ViewBag.token = requestCookies.Value;
+            }
+            else
+            {
+                ViewBag.token = token;
             }
             cookie.Value = ViewBag.token;
             Response.Cookies.Add(cookie);
