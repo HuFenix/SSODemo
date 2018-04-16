@@ -17,17 +17,17 @@
         {
 
             <div>登录成功,当前用户：@ViewBag.v</div>
-            <a href="http://localhost:8055/login/loginOut?redirect_url=http://localhost:8051&token=@(ViewBag.token)">退出</a><br />
+        <a href="http://192.168.10.120:8055/login/loginOut?redirect_url=http://localhost:8051&token=@(ViewBag.token)">退出</a><br />
 
         }
         else if (ViewBag.v as string == "roleError")
         {
             <div>权限不足</div>
-            <a href="http://localhost:8055/login/loginOut?redirect_url=http://localhost:8051&token=@(ViewBag.token)">退出</a><br />
+        <a href="http://192.168.10.120:8055/login/loginOut?redirect_url=http://localhost:8051&token=@(ViewBag.token)">退出</a><br />
         }
         else
         {
-            <a href="http://localhost:8055/login?redirect_url=http://localhost:8051">登录</a><br />
+            <a href="http://192.168.10.120:8055/login?redirect_url=http://localhost:8051">登录</a><br />
 
         }
         <a href="http://localhost:8052">跳转到www.b.com</a>
