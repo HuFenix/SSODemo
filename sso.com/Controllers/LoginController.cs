@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using Utils;
@@ -34,7 +35,7 @@ namespace sso.com.Controllers
             //限制暴力登录-设置IP登录频率
             //验证登录名密码是否正确 TODO
             string token = "";
-            var ret = new ReturnBaseModel();            
+            var ret = new ReturnBaseModel();
 
             if (userList.Exists(x => x.UserName == name))
             {
@@ -43,12 +44,16 @@ namespace sso.com.Controllers
                     //1写cache
                     token = name + "_" + Guid.NewGuid().ToString().Substring(4, 12) + DateTime.Now.Millisecond;
                     token = Common.Common.EncryptMD5(token);
-                    //将用户登录信息保存在cache中，有效时间一分钟
-                    Utils.CacheHelper.Insert(token, name, 1);
-                    //生成token--应该以更复杂的形式生成
 
-              
-                    ret.ReturnCode = "1"; ret.ReturnMsg = redirect_url+"?token="+token;                   
+                    //将用户登录信息保存在cache中，有效时间30分钟，用于验证登录
+                    Utils.CacheHelper.Insert(token, name, 30);
+
+
+
+                    //根据URL 判别所属租户TODO
+                    
+
+                    ret.ReturnCode = "1"; ret.ReturnMsg = redirect_url + "?token=" + token;
                 }
                 else
                 {
@@ -59,8 +64,8 @@ namespace sso.com.Controllers
             else
             {
                 ret.ReturnCode = "-1"; ret.ReturnMsg = "账号未注册";
-            }     
-            
+            }
+
 
 
             //return Redirect(acom+"&others="+substation+"&main="+redirect_url);
