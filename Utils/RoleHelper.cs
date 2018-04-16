@@ -36,7 +36,6 @@ namespace Utils
             //验证是否登录--每个需要登录验证的地方都应该调用
             var ssoAddress = System.Configuration.ConfigurationManager.AppSettings["SSOAddress"];
             v = HttpHelper.OpenReadWithHttps(ssoAddress+"/login/validateLogin", "token=" + token);
-            //v = HttpHelper.OpenReadWithHttps("http://localhost:8055/login/validateLogin", "token=" + token);
             if (v != "error")
             {
                 var userList = RoleHelper.AccountInfo();//TODO 获取账号信息

@@ -18,7 +18,10 @@ namespace c.com.Controllers
             //C
             var v = "";//页面返回状态
             var systemNo = "c";//系统识别代码
-
+            var serURL = System.Configuration.ConfigurationManager.AppSettings["ServerURL"];
+            var ssoURL = System.Configuration.ConfigurationManager.AppSettings["SSOAddress"];
+            ViewBag.ser = serURL;
+            ViewBag.sso = ssoURL;
             var requestCookies = Request.Cookies["currentUser"];
             HttpCookie cookie = new HttpCookie("currentUser");
             cookie.HttpOnly = true;
