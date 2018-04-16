@@ -28,7 +28,7 @@ namespace a.com.Controllers
             {
                 ViewBag.token = requestCookies.Value;
             }
-            else
+            if(token !=null)
             {
                 ViewBag.token = token;
             }

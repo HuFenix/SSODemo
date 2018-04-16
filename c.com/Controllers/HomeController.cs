@@ -13,7 +13,7 @@ namespace c.com.Controllers
     public class HomeController : Controller
     {
         //需要登录的页面-TODO
-        public ActionResult Index()
+        public ActionResult Index(string token = null)
         {
             //C
             var v = "";//页面返回状态
@@ -26,6 +26,10 @@ namespace c.com.Controllers
             if (requestCookies != null)
             {
                 ViewBag.token = requestCookies.Value;
+            }
+            if (token != null)
+            {
+                ViewBag.token = token;
             }
             cookie.Value = ViewBag.token;
             Response.Cookies.Add(cookie);
