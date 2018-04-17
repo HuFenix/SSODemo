@@ -16,20 +16,20 @@
         @if (ViewBag.v as string != "error" && ViewBag.v as string != "roleError")
         {
 
-            <div>登录成功,当前用户：@ViewBag.v</div>
-            <a href=@(ViewBag.sso + "/login/loginOut?redirect_url=" + ViewBag.ser + "&token="+ViewBag.token)>退出</a><br />
+            <div>登录成功,当前用户：@ViewBag.v<span>(@ViewBag.Name)</span><br /><span>租户号：@ViewBag.TenantId</span></div>
+            <a href=@(ViewBag.sso + "/login/loginOut?redirect_url=" + ViewBag.ser + "&token=" + ViewBag.token + "&name=" + ViewBag.Name)>退出</a><br />
 
         }
         else if (ViewBag.v as string == "roleError")
         {
             <div>权限不足</div>
-            <a href=@(ViewBag.sso + "/login/loginOut?redirect_url=" + ViewBag.ser + "&token="+ViewBag.token)>退出</a><br />
+            <a href=@(ViewBag.sso + "/login/loginOut?redirect_url=" + ViewBag.ser + "&token=" + ViewBag.token + "&name=" + ViewBag.Name)>退出</a><br />
         }
         else
         {
             <a href=@(ViewBag.sso+"/login?redirect_url="+ViewBag.ser)>登录</a><br />
 
-        }    
+        }
 
     </div>
 

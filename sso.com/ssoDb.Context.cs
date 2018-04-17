@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TenantDemo
+namespace sso.com
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SSoTestEntities : DbContext
+    public partial class SSoTestEntities1 : DbContext
     {
-        public SSoTestEntities()
-            : base("name=SSoTestEntities")
+        public SSoTestEntities1()
+            : base("name=SSoTestEntities1")
         {
         }
     
@@ -25,6 +25,7 @@ namespace TenantDemo
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Tenants> Tenants { get; set; }
+        public virtual DbSet<TenantsInfo> TenantsInfo { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
     }
 }

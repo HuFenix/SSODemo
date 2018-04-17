@@ -7,16 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TenantDemo
+namespace sso.com
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Tenants
+    public partial class Users
     {
-        public int Id { get; set; }
-        public string Tenant_id { get; set; }
+        public System.Guid Id { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string TenantsId { get; set; }
         public string Name { get; set; }
-        public Nullable<System.DateTime> CreatDate { get; set; }
+        public Nullable<int> Status { get; set; }
     }
 }

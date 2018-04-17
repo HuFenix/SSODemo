@@ -1,4 +1,5 @@
-﻿using sso.com.Common;
+﻿using Newtonsoft.Json;
+using sso.com.Common;
 using sso.com.Models;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,11 @@ namespace sso.com.Controllers
 {
     public class LoginController : Controller
     {
+        private SSoTestEntities1 _dbContext;
+        public LoginController()
+        {
+            _dbContext = new SSoTestEntities1();
+        }
         // 登录
         public ActionResult Index(string redirect_url, string client_id = null)
         {
@@ -50,10 +56,27 @@ namespace sso.com.Controllers
 
 
 
-                    //根据URL 判别所属租户TODO
                     
+                    #region 租户识别
+                    //根据登录判别所属租户TODO
 
-                    ret.ReturnCode = "1"; ret.ReturnMsg = redirect_url + "?token=" + token;
+
+                    var tenantId = userList.Where(x => x.UserName == name).Select(x => x.TenantId).FirstOrDefault() ;
+                    //通过数据库查询tennat 信息
+                    var tenantData = _dbContext.TenantsInfo.Where(x => x.Tenant_id == tenantId).FirstOrDefault();
+                    if (tenantData != null)
+                    {
+                        Utils.CacheHelper.Insert(name, new Tenants { Id = tenantData.Id, Tenant_id = tenantData.Tenant_id, Name =  tenantData.Name, CreatDate = DateTime.Now },300);
+                        ret.ReturnCode = "1"; ret.ReturnMsg = redirect_url + "?token=" + token;
+                    }
+                    else
+                    {
+                        ret.ReturnCode = "-1"; ret.ReturnMsg = "租户信息获取失败";
+                    }
+                   
+                    #endregion 
+
+                    
                 }
                 else
                 {
@@ -93,10 +116,31 @@ namespace sso.com.Controllers
             return v.ToString();
         }
 
-        public ActionResult LoginOut(string redirect_url, string token)
+        /// <summary>
+        /// 登出
+        /// </summary>
+        /// <param name="redirect_url">返回页面</param>
+        /// <param name="token">识别码</param>
+        /// <param name="name">商户名</param>
+        /// <returns></returns>
+        public ActionResult LoginOut(string redirect_url, string token,string name)
         {
             Utils.CacheHelper.Remove(token);
+            Utils.CacheHelper.Remove(name);
             return Redirect(redirect_url);
+        }
+
+        /// <summary>
+        /// 通过用户获取租户信息
+        /// </summary>
+        /// <param name="name">用户名</param>
+        /// <returns></returns>
+        [HttpPost]
+        public string GetTenantInfo(string name)
+        {
+            var v = Utils.CacheHelper.Get(name);
+            var data = JsonConvert.SerializeObject(v);            
+            return data;
         }
 
     }

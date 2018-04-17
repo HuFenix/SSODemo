@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Utils;
+using Utils.CommonModel;
 
 namespace b.com.Controllers
 {
@@ -39,6 +41,19 @@ namespace b.com.Controllers
 
             //验证权限
             v = RoleHelper.CheckRole(systemNo, ViewBag.token);
+
+            //获取租户信息
+            if (v != null && v != "error" && v != "roleError")
+            {
+                var res = HttpHelper.OpenReadWithHttps(ssoURL + "/Login/GetTenantInfo", "name=" + v);
+                if (res != null && res != "")
+                {
+                    var data = JsonConvert.DeserializeObject<TenantsVM>(res);
+                    ViewBag.TenantId = data.Tenant_id;
+                    ViewBag.Name = data.Name;
+                }
+            }
+
 
             ViewBag.v = v;
             return View();
