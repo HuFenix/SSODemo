@@ -54,6 +54,10 @@ namespace sso.com.Controllers
                     //将用户登录信息保存在cache中，有效时间30分钟，用于验证登录
                     Utils.CacheHelper.Insert(token, name, 30);
 
+                    HttpCookie cookie = new HttpCookie("currentUser");
+                    cookie.HttpOnly = true;
+                    cookie.Expires = DateTime.Now.AddYears(100);
+                    Response.Cookies.Add(cookie);
 
 
                     
@@ -67,7 +71,7 @@ namespace sso.com.Controllers
                     if (tenantData != null)
                     {
                         Utils.CacheHelper.Insert(name, new Tenants { Id = tenantData.Id, Tenant_id = tenantData.Tenant_id, Name =  tenantData.Name, CreatDate = DateTime.Now },300);
-                        ret.ReturnCode = "1"; ret.ReturnMsg = redirect_url + "?token=" + token;
+                        ret.ReturnCode = "1"; ret.ReturnMsg = redirect_url + "/Base/CreateCookie" + "?token=" + token + "&redirect_url=" + redirect_url;
                     }
                     else
                     {
