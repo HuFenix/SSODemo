@@ -9,17 +9,17 @@ namespace DataEntity
     public  class SSoTestEntities : DbContext
     {
         private string _tenantId;
-        public SSoTestEntities()
+        public SSoTestEntities(string tenant_id)
             : base("name=SSoTestEntities")
         {
-            //_tenantId = tenant_id;
+            _tenantId = tenant_id;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             //throw new UnintentionalCodeFirstException();
-            modelBuilder.Filter("ProductsFilter", (Products b, string tenantId) => (b.Tenant_id == tenantId), () => { return "47AB0C3994359CD1483BF348A87269F4"; });
+            modelBuilder.Filter("ProductsFilter", (Products b, string tenantId) => (b.Tenant_id == tenantId), () => { return _tenantId; });
         }
 
         public virtual DbSet<Products> Products { get; set; }

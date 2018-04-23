@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DataEntity;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,13 +31,22 @@ namespace c.com.Controllers
             //验证权限
             v = RoleHelper.CheckRole(systemNo, ViewBag.token);
 
+
             //获取租户信息           
-            var resModel = TenantHelper.GetTenantInfo(v, ssoURL);
-            if (resModel != null)
+            var tenantModel = TenantHelper.GetTenantInfo(v, ssoURL);
+
+            if (tenantModel != null)
             {
-                ViewBag.TenantId = resModel.Tenant_id;
-                ViewBag.Name = resModel.Name;
+                ViewBag.TenantId = tenantModel.Tenant_id;
+                ViewBag.Name = tenantModel.Name;
             }
+            if (tenantModel != null)
+            {
+                var _dbContext = new SSoTestEntities(tenantModel.Tenant_id);
+                var res = _dbContext.Products.ToList();
+                ViewBag.ProCount = res.Count();
+            }
+
 
             ViewBag.v = v;
             return View();

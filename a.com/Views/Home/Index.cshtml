@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-
+@model DataEntity.EntityModel.Products
 <!DOCTYPE html>
 
 <html>
@@ -18,7 +18,8 @@
 
             <div>登录成功,当前用户：@ViewBag.v<span>(@ViewBag.Name)</span><br /><span>租户号：@ViewBag.TenantId</span></div>
             <a href=@(ViewBag.sso + "/login/loginOut?redirect_url=" + ViewBag.ser + "&token=" + ViewBag.token + "&name=" + ViewBag.Name)>退出</a><br />
-
+            <p>产品数量: @ViewBag.ProCount</p>
+           
         }
         else if (ViewBag.v as string == "roleError")
         {
