@@ -1,4 +1,5 @@
 ﻿using DataEntity;
+using DataEntity.EntityModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -40,14 +41,17 @@ namespace a.com.Controllers
                 ViewBag.TenantId = tenantModel.Tenant_id;
                 ViewBag.Name = tenantModel.Name;
             }
+            var res = new List<Products>();
             if (tenantModel != null)
             {
-                var _dbContext = new SSoTestEntities(tenantModel.Tenant_id);
-                var res = _dbContext.Products.ToList();
-                ViewBag.ProCount = res.Count();
+                ViewBag.TenantId = tenantModel.Tenant_id;
+                ViewBag.Name = tenantModel.Name; var _dbContext = new SSoTestEntities(tenantModel.Tenant_id);
+                res = _dbContext.Products.ToList();
             }
+
             ViewBag.v = v;
-            return View();
+            return View(res);
+
         }
 
       

@@ -1,38 +1,39 @@
 ﻿@{
     Layout = null;
 }
-@model DataEntity.EntityModel.Products
-<!DOCTYPE html>
+@model  List<DataEntity.EntityModel.Products>
+    <!DOCTYPE HTML>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>a.com</title>
-</head>
-<body>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>a.com</title>
+    </head>
+    <body>
 
-    <div>
-        <div>当前站点：www.a.com</div>
-        @if (ViewBag.v as string != "error" && ViewBag.v as string != "roleError")
-        {
+        <div>
+            <div>当前站点：www.a.com</div>
+            @if (ViewBag.v as string != "error" && ViewBag.v as string != "roleError")
+            {
 
-            <div>登录成功,当前用户：@ViewBag.v<span>(@ViewBag.Name)</span><br /><span>租户号：@ViewBag.TenantId</span></div>
-            <a href=@(ViewBag.sso + "/login/loginOut?redirect_url=" + ViewBag.ser + "&token=" + ViewBag.token + "&name=" + ViewBag.Name)>退出</a><br />
-            <p>产品数量: @ViewBag.ProCount</p>
-           
-        }
-        else if (ViewBag.v as string == "roleError")
-        {
-            <div>权限不足</div>
-            <a href=@(ViewBag.sso + "/login/loginOut?redirect_url=" + ViewBag.ser + "&token=" + ViewBag.token + "&name=" + ViewBag.Name)>退出</a><br />
-        }
-        else
-        {
-            <a href=@(ViewBag.sso+"/login?redirect_url="+ViewBag.ser)>登录</a><br />
+                <div>登录成功,当前用户：@ViewBag.v<span>(@ViewBag.Name)</span><br /><span>租户号：@ViewBag.TenantId</span></div>
+                <a href=@(ViewBag.sso + "/login/loginOut?redirect_url=" + ViewBag.ser + "&token=" + ViewBag.token + "&name=" + ViewBag.Name)>退出</a><br />
+                foreach (var item in Model)
+                { <span>产品名：</span><span>@item.ProName</span>}
 
-        }
+            }
+            else if (ViewBag.v as string == "roleError")
+            {
+                <div>权限不足</div>
+                <a href=@(ViewBag.sso + "/login/loginOut?redirect_url=" + ViewBag.ser + "&token=" + ViewBag.token + "&name=" + ViewBag.Name)>退出</a><br />
+            }
+            else
+            {
+                <a href=@(ViewBag.sso+"/login?redirect_url="+ViewBag.ser)>登录</a><br />
 
-    </div>
+            }
 
-</body>
+        </div>
+
+    </body>
 </html>
