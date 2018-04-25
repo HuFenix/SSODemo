@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -167,27 +168,6 @@
     <Compile Include="Models\ReturnBaseModel.cs" />
     <Compile Include="Models\Tenants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ssoDb.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ssoDb.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ssoDb.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ssoDb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ssoDb.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ssoDb.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="TenantsInfo.cs">
-      <DependentUpon>ssoDb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Users.cs">
-      <DependentUpon>ssoDb.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -214,16 +194,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="ssoDb.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ssoDb.edmx</DependentUpon>
-      <LastGenOutput>ssoDb.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="ssoDb.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ssoDb.edmx</DependentUpon>
-      <LastGenOutput>ssoDb.cs</LastGenOutput>
-    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -241,13 +211,6 @@
     <Content Include="Views\Main\Contact.cshtml" />
     <Content Include="Views\Main\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
-    <EntityDeploy Include="ssoDb.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ssoDb.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="ssoDb.edmx.diagram">
-      <DependentUpon>ssoDb.edmx</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -261,6 +224,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataEntity\DataEntity.csproj">
+      <Project>{a1bb2a73-892b-4882-b04b-936f94d37d32}</Project>
+      <Name>DataEntity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.csproj">
       <Project>{302d5074-eafa-4e86-b56e-9ad560e6bbde}</Project>
       <Name>Utils</Name>

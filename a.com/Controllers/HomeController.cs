@@ -45,7 +45,8 @@ namespace a.com.Controllers
             if (tenantModel != null)
             {
                 ViewBag.TenantId = tenantModel.Tenant_id;
-                ViewBag.Name = tenantModel.Name; var _dbContext = new SSoTestEntities(tenantModel.Tenant_id);
+                ViewBag.Name = tenantModel.Name;
+                var _dbContext = new SSoTestEntities(tenantModel.Tenant_id);
                 res = _dbContext.Products.ToList();
             }
 
@@ -54,7 +55,11 @@ namespace a.com.Controllers
 
         }
 
-      
+        public ActionResult SerInfo()
+        {
+            var info = GetSerInfo();
+            return View(info);
+        }
 
     }
 

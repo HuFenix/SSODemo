@@ -12,14 +12,14 @@
     <body>
 
         <div>
-            <div>当前站点：www.a.com</div>
+            <div>当前站点：<a href="/Home/SerInfo">www.a.com</a></div>
             @if (ViewBag.v as string != "error" && ViewBag.v as string != "roleError")
             {
 
                 <div>登录成功,当前用户：@ViewBag.v<span>(@ViewBag.Name)</span><br /><span>租户号：@ViewBag.TenantId</span></div>
                 <a href=@(ViewBag.sso + "/login/loginOut?redirect_url=" + ViewBag.ser + "&token=" + ViewBag.token + "&name=" + ViewBag.Name)>退出</a><br />
                 foreach (var item in Model)
-                { <span>产品名：</span><span>@item.ProName</span>}
+                { <span>产品名：</span><span>@item.ProName</span><br />}
 
             }
             else if (ViewBag.v as string == "roleError")

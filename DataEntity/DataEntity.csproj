@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="EntityModel\Products.cs" />
     <Compile Include="EntityModel\TenantsInfo.cs" />
+    <Compile Include="EntityModel\TestTenantsData.cs" />
     <Compile Include="EntityModel\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SSoTestEntities.cs" />

@@ -1,4 +1,5 @@
 ﻿using DataEntity;
+using DataEntity.EntityModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,16 +10,18 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Utils;
+using Utils.CommonModel;
 
 namespace b.com.Controllers
 {
     public class HomeController : BaseController
     {
+        private string systemNo = "b";//系统识别代码
+        private TenantsVM _tenantModel = new TenantsVM();
         //需要登录的页面-TODO
         public ActionResult Index()
         {
             //B
-            var systemNo = "b";//系统识别代码
             ViewBag.ser = serURL;
             ViewBag.sso = ssoURL;
             var requestCookies = Request.Cookies["currentUser"];
@@ -26,8 +29,6 @@ namespace b.com.Controllers
             {
                 ViewBag.token = requestCookies.Value;
             }
-
-
             //验证权限
             v = RoleHelper.CheckRole(systemNo, ViewBag.token);
 
@@ -39,18 +40,23 @@ namespace b.com.Controllers
                 ViewBag.TenantId = tenantModel.Tenant_id;
                 ViewBag.Name = tenantModel.Name;
             }
-
+            var res = new List<Products>();
             if (tenantModel != null)
             {
+                ViewBag.TenantId = tenantModel.Tenant_id;
+                ViewBag.Name = tenantModel.Name;
                 var _dbContext = new SSoTestEntities(tenantModel.Tenant_id);
-                var res = _dbContext.Products.ToList();
-                ViewBag.ProCount = res.Count();
+                res = _dbContext.Products.ToList();
             }
 
             ViewBag.v = v;
-            return View();
+            return View(res);
         }
 
-
+        public ActionResult SerInfo()
+        {
+            var info = GetSerInfo();
+            return View(info);
+        }
     }
 }

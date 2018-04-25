@@ -1,4 +1,5 @@
 ﻿using DataEntity;
+using DataEntity.EntityModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,11 @@ namespace c.com.Controllers
 {
     public class HomeController : BaseController
     {
+        private string systemNo = "c";//系统识别代码
+        private TenantsVM _tenantModel = new TenantsVM();
         //需要登录的页面-TODO
         public ActionResult Index()
         {
-            //C
-            var systemNo = "c";//系统识别代码
             ViewBag.ser = serURL;
             ViewBag.sso = ssoURL;
             var requestCookies = Request.Cookies["currentUser"];
@@ -27,10 +28,8 @@ namespace c.com.Controllers
             {
                 ViewBag.token = requestCookies.Value;
             }
-
             //验证权限
             v = RoleHelper.CheckRole(systemNo, ViewBag.token);
-
 
             //获取租户信息           
             var tenantModel = TenantHelper.GetTenantInfo(v, ssoURL);
@@ -40,16 +39,17 @@ namespace c.com.Controllers
                 ViewBag.TenantId = tenantModel.Tenant_id;
                 ViewBag.Name = tenantModel.Name;
             }
+            var res = new List<Products>();
             if (tenantModel != null)
             {
+                ViewBag.TenantId = tenantModel.Tenant_id;
+                ViewBag.Name = tenantModel.Name;
                 var _dbContext = new SSoTestEntities(tenantModel.Tenant_id);
-                var res = _dbContext.Products.ToList();
-                ViewBag.ProCount = res.Count();
+                res = _dbContext.Products.ToList();
             }
 
-
             ViewBag.v = v;
-            return View();
+            return View(res);
         }
 
 

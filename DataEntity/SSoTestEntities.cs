@@ -9,7 +9,7 @@ namespace DataEntity
     public  class SSoTestEntities : DbContext
     {
         private string _tenantId;
-        public SSoTestEntities(string tenant_id)
+        public SSoTestEntities(string tenant_id="")
             : base("name=SSoTestEntities")
         {
             _tenantId = tenant_id;
@@ -23,7 +23,6 @@ namespace DataEntity
         }
 
         public virtual DbSet<Products> Products { get; set; }
-        public virtual DbSet<TenantsInfo> TenantsInfo { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
+
     }
 }
