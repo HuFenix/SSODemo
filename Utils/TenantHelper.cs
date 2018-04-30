@@ -8,8 +8,17 @@ using Utils.CommonModel;
 
 namespace Utils
 {
+    /// <summary>
+    /// 租户信息相关帮助类
+    /// </summary>
     public class TenantHelper
     {
+        /// <summary>
+        /// 获取租户信息
+        /// </summary>
+        /// <param name="userName">租户名</param>
+        /// <param name="ssoUrl">单点登录服务器地址</param>
+        /// <returns></returns>
         public static TenantsVM GetTenantInfo(string userName, string ssoUrl)
         {
             if (userName != null && userName != "error" && userName != "roleError")

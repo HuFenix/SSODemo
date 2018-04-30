@@ -6,6 +6,9 @@ using Utils;
 
 namespace Utils
 {
+    /// <summary>
+    /// 权限相关帮助类
+    /// </summary>
     public class RoleHelper
     {
 

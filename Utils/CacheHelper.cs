@@ -7,6 +7,9 @@ using System.Web.Caching;
 
 namespace Utils
 {
+    /// <summary>
+    ///  Cache帮助类
+    /// </summary>
     public class CacheHelper
     {
         /// <summary>

@@ -9,6 +9,9 @@ using Utils.CommonModel;
 
 namespace Utils
 {
+    /// <summary>
+    /// 控制器基类
+    /// </summary>
     public class BaseController : Controller
     {
         //当前服务器地址

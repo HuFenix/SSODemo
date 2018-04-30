@@ -18,6 +18,12 @@ namespace sso.com.Controllers
         {
             //验证redirect_url是否可靠 TODO
             //验证client_id是否可信  TODO
+            var sysInfo = new SystemInfoHelper();
+            var pCount = sysInfo.ProcessorCount;
+            var cpuLoad = sysInfo.CpuLoad;
+            var memoryAvailable = sysInfo.MemoryAvailable;
+            var physicalMemory = sysInfo.PhysicalMemory;
+
             ViewBag.redirect_url = redirect_url;
             return View();
         }
@@ -45,12 +51,6 @@ namespace sso.com.Controllers
 
                         //将用户登录信息保存在cache中，有效时间30分钟，用于验证登录
                         Utils.CacheHelper.Insert(token, name, 30);
-
-                        HttpCookie cookie = new HttpCookie("currentUser");
-                        cookie.HttpOnly = true;
-                        cookie.Expires = DateTime.Now.AddYears(100);
-                        Response.Cookies.Add(cookie);
-
 
 
                         #region 租户识别

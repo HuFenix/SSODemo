@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
@@ -46,10 +47,13 @@
   <ItemGroup>
     <Compile Include="BaseController.cs" />
     <Compile Include="CacheHelper.cs" />
+    <Compile Include="CommonModel\SysInfo.cs" />
+    <Compile Include="Extentions\SystemInfo.cs" />
     <Compile Include="HttpHelper.cs" />
     <Compile Include="CommonModel\TenantsVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleHelper.cs" />
+    <Compile Include="SystemInfoHelper.cs" />
     <Compile Include="TenantHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
