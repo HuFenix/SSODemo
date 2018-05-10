@@ -32,7 +32,7 @@ namespace c.com.Controllers
             v = RoleHelper.CheckRole(systemNo, ViewBag.token);
 
             //获取租户信息           
-            var tenantModel = TenantHelper.GetTenantInfo(v, ssoURL);
+            var tenantModel = this.GetTenantInfo(v);
 
             if (tenantModel != null)
             {

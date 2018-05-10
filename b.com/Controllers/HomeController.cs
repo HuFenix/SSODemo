@@ -17,7 +17,6 @@ namespace b.com.Controllers
     public class HomeController : BaseController
     {
         private string systemNo = "b";//系统识别代码
-        private TenantsVM _tenantModel = new TenantsVM();
         //需要登录的页面-TODO
         public ActionResult Index()
         {
@@ -33,7 +32,8 @@ namespace b.com.Controllers
             v = RoleHelper.CheckRole(systemNo, ViewBag.token);
 
             //获取租户信息           
-            var tenantModel = TenantHelper.GetTenantInfo(v, ssoURL);
+            var tId = RoleHelper.AccountInfo().Where(x => x.UserName == v).Select(x => x.TenantId).FirstOrDefault();
+            var tenantModel = this.GetTenantInfo(tId);
 
             if (tenantModel != null)
             {

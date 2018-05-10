@@ -15,6 +15,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "c.com", "c.com\c.com.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataEntity", "DataEntity\DataEntity.csproj", "{A1BB2A73-892B-4882-B04B-936F94D37D32}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Help", "Help", "{8525B6FE-4DE6-48B5-9238-7AE98D976D81}"
+	ProjectSection(SolutionItems) = preProject
+		Helper\About.txt = Helper\About.txt
+		DBHelper\SSoTest.bak = DBHelper\SSoTest.bak
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

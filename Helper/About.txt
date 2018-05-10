@@ -1,0 +1,28 @@
+SaaS系统下单点登录主要核心技术
+单点登录概念，cache缓存，DynamicFilters动态过滤，服务器间Http通信（HttpWebRequest）
+
+a,b,c为三个应用级服务器，SSO为单点登录服务器
+DataEntity 数据库实体和上下文类
+Utils 公用帮助文件单元
+  -BaseContorller控制器基类，用于创建本地cache和cookie
+  -CacheHelper cache帮助类
+  -HttpHelper 通信帮助类，用于向单点登录服务器发送验证请求
+  -SystemInfoHelper 系统检测类
+  
+
+
+
+基本逻辑：
+登录页面
+->SSO服务器登录页面
+->Post获取登录信息【创建服务器用户cache(Token秘钥+用户名)键值对】
+->带token跳转应用服务器Base/CreateCookieWithoutTenant 创建本地cookie 
+->应用服务器创建租户信息tenant到cache，有租户则不需要创建
+->返回登录服务器页面
+
+其他应用服务器登录
+->页面加载时RoleHelper.CheckRole，
+->判断是否有访问权限
+->根据租户名获取租户Id
+->返回租户信息
+->通过注册带参数的Context，过滤该租户下的产品SSoTestEntities(tId)

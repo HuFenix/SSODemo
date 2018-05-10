@@ -37,13 +37,35 @@ namespace Utils
         /// 创建缓存项过期时间（分钟）
         /// </summary>
         /// <param name="key"></param>
-        /// <param name="vslue"></param>
+        /// <param name="value"></param>
         /// <param name="expires"></param>
-        public static void Insert(string key, object vslue, int expires)
+        //public static void Insert(string key, object value, int expires)
+        //{
+        //    HttpContext.Current.Cache.Insert(key, value, null, Cache.NoAbsoluteExpiration, new TimeSpan(0, expires, 0));
+           
+        //}
+        public static void Insert(string cacheKey, object content, int timeOut = 3600)
         {
-            HttpContext.Current.Cache.Insert(key, vslue, null, Cache.NoAbsoluteExpiration, new TimeSpan(0, expires, 0));
-        }
+            try
+            {
+                if (content == null)
+                {
+                    return;
+                }
+                var objCache = HttpRuntime.Cache;
+                //设置绝对过期时间
+                //绝对时间过期。DateTime.Now.AddSeconds(10)表示缓存在3600秒后过期，TimeSpan.Zero表示不使用平滑过期策略。
+                objCache.Insert(cacheKey, content, null, DateTime.Now.AddSeconds(timeOut), TimeSpan.Zero, CacheItemPriority.High, null);
+                //相对过期
+                //DateTime.MaxValue表示不使用绝对时间过期策略，TimeSpan.FromSeconds(10)表示缓存连续10秒没有访问就过期。
+                //objCache.Insert(cacheKey, objObject, null, DateTime.MaxValue, timeout, CacheItemPriority.NotRemovable, null); 
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
         public static object Get(string key)
         {
             if (string.IsNullOrEmpty(key))

@@ -29,14 +29,13 @@ namespace Utils.CommonModel
         public long PhysicalMemory { get; set; }
 
         /// <summary>
-        /// 内存占用率
+        /// 内存占用率 百分比
         /// </summary>
         public double MemoryLoad
         {
             get
             {
-                var res = (double)(MemoryAvailable / PhysicalMemory);
-                var res2 = ((double)MemoryAvailable / (double)PhysicalMemory);
+                var res = 1-((double)MemoryAvailable / (double)PhysicalMemory);
                 return
                     Math.Round(res * 100, 3);
 

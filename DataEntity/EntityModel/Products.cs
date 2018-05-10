@@ -13,5 +13,6 @@ namespace DataEntity.EntityModel
         public string Tenant_id { get; set; }
         public string Creater { get; set; }
         public int IsDeleted { get; set; }
+        public int Now { get; set; }
     }
 }

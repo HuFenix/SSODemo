@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using Utils;
 using Utils.CommonModel;
+using Utils.Extentions;
 
 namespace a.com.Controllers
 {
@@ -18,8 +19,7 @@ namespace a.com.Controllers
     {
      
         private string systemNo = "a";//系统识别代码
-        private TenantsVM _tenantModel =new TenantsVM();
-
+        
         public ActionResult Index()
         {
            
@@ -33,8 +33,9 @@ namespace a.com.Controllers
             //验证权限
             v = RoleHelper.CheckRole(systemNo, ViewBag.token);
 
-            //获取租户信息           
-            var tenantModel = TenantHelper.GetTenantInfo(v, ssoURL);         
+            //获取租户信息        
+            var tId = RoleHelper.AccountInfo().Where(x=>x.UserName==v).Select(x=>x.TenantId).FirstOrDefault();
+            var tenantModel = this.GetTenantInfo(tId);         
 
             if (tenantModel != null)
             {
@@ -58,9 +59,12 @@ namespace a.com.Controllers
         public ActionResult SerInfo()
         {
             var info = GetSerInfo();
+            var s = SystemInfo.GetCurrentSystemInfo();
             return View(info);
         }
 
+
+       
     }
 
 

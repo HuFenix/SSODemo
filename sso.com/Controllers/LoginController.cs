@@ -16,13 +16,6 @@ namespace sso.com.Controllers
         // 登录
         public ActionResult Index(string redirect_url, string client_id = null)
         {
-            //验证redirect_url是否可靠 TODO
-            //验证client_id是否可信  TODO
-            var sysInfo = new SystemInfoHelper();
-            var pCount = sysInfo.ProcessorCount;
-            var cpuLoad = sysInfo.CpuLoad;
-            var memoryAvailable = sysInfo.MemoryAvailable;
-            var physicalMemory = sysInfo.PhysicalMemory;
 
             ViewBag.redirect_url = redirect_url;
             return View();
@@ -49,8 +42,8 @@ namespace sso.com.Controllers
                         token = name + "_" + Guid.NewGuid().ToString().Substring(4, 12) + DateTime.Now.Millisecond;
                         token = Common.Common.EncryptMD5(token);
 
-                        //将用户登录信息保存在cache中，有效时间30分钟，用于验证登录
-                        Utils.CacheHelper.Insert(token, name, 30);
+                        //将用户登录信息保存在cache中，用于验证登录
+                        Utils.CacheHelper.Insert(token, name, 9000);
 
 
                         #region 租户识别
@@ -63,8 +56,8 @@ namespace sso.com.Controllers
                         var tenantData = tenants.Where(x => x.Tenant_id == tenantId).FirstOrDefault();
                         if (tenantData != null)
                         {
-                            Utils.CacheHelper.Insert(name, new Tenants { Id = tenantData.Id, Tenant_id = tenantData.Tenant_id, Name = tenantData.Name, CreatDate = DateTime.Now }, 300);
-                            ret.ReturnCode = "1"; ret.ReturnMsg = redirect_url + "/Base/CreateCookie" + "?token=" + token + "&redirect_url=" + redirect_url;
+                            //Utils.CacheHelper.Insert(name, new Tenants { Id = tenantData.Id, Tenant_id = tenantData.Tenant_id, Name = tenantData.Name, CreatDate = DateTime.Now }, 300);
+                            ret.ReturnCode = "1"; ret.ReturnMsg = redirect_url + "/Base/CreateCookie" + "?token=" + token + "&Tenant_id="+ tenantData.Tenant_id + "&Tenant_name="+ tenantData.Name + "&redirect_url=" + redirect_url;
                         }
                         else
                         {
@@ -114,7 +107,7 @@ namespace sso.com.Controllers
             }
             //更新缓存过期时间
             Utils.CacheHelper.Remove(token);
-            Utils.CacheHelper.Insert(token, v, 1);
+            Utils.CacheHelper.Insert(token, v, 3600);
             //TODO:将用户相关的信息返回
             return v.ToString();
         }
@@ -133,18 +126,18 @@ namespace sso.com.Controllers
             return Redirect(redirect_url);
         }
 
-        /// <summary>
-        /// 通过用户获取租户信息
-        /// </summary>
-        /// <param name="name">用户名</param>
-        /// <returns></returns>
-        [HttpPost]
-        public string GetTenantInfo(string name)
-        {
-            var v = Utils.CacheHelper.Get(name);
-            var data = JsonConvert.SerializeObject(v);
-            return data;
-        }
+        ///// <summary>
+        ///// 通过用户获取租户信息
+        ///// </summary>
+        ///// <param name="name">用户名</param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public string GetTenantInfo(string name)
+        //{
+        //    var v = Utils.CacheHelper.Get(name);
+        //    var data = JsonConvert.SerializeObject(v);
+        //    return data;
+        //}
 
     }
 }
